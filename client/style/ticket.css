@@ -1,0 +1,89 @@
+body {
+    margin: 0; 
+    font-family: 'Montserrat', 'Open Sans';
+}
+
+.header-container {
+    background-image: url(../header-background.jpg); 
+    background-size: cover; 
+    object-fit: contain; 
+    height: 800px; 
+    width: 100%; 
+    align-items: center;
+    justify-content: center;
+}
+
+.page-container {
+    position: absolute; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+
+.ticket-container {
+    margin: 100px; 
+    border-radius: 8px; 
+    padding: 10px; 
+    background-color: white; 
+    height: 400px; 
+    width: 1000px; 
+    display: flex; 
+}
+
+.boarding-pass-container {
+    width: 66%; 
+    border-right: 1px dashed black; 
+    padding: 10px; 
+}
+
+.ticket-heading-container {
+    height: 40px; 
+    width: 100%; 
+    border-bottom: 1px solid black;
+    display: flex; 
+    justify-content: space-between;
+}
+
+.seat-pass-container {
+    width: 33%; 
+    padding: 10px; 
+}
+
+.ticket {
+    display: flex; 
+}
+
+.boarding-info, .ticket-info, .seat-info {
+    width: 50%; 
+    height: 350px; 
+    /* border: 1px solid black;  */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.gate, .boarding-time, .zone, .terminal, .seat-no, .depart-time {
+    font-size: 60px; 
+}
+
+.ticket-no, .flight-no, .book-ref {
+    font-size: 20px; 
+}
+
+.button {
+    background-color: black;
+    color: white; 
+    width: 200px; 
+    height: 40px; 
+    border-radius: 8px; 
+    padding-top: 15px; 
+    padding-left: 30px; 
+    transition: all .3s ease-in-out, color 0.2s 0.3s; 
+}
+
+.button:hover {
+    cursor: pointer; 
+    color: white; 
+    background-color: #1C77EB;
+}

@@ -1,0 +1,107 @@
+body {
+    margin: 0; 
+    font-family: 'Montserrat', 'Open Sans';
+}
+
+.header-container {
+    background-image: url(../header-background.jpg);
+    background-size: cover; 
+    object-fit: contain;
+    min-height: 1000px; 
+    height: 2000px;  
+    width: 100%; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.page-container {
+    position: absolute; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+
+.travel-info-title {
+    padding-bottom: 20px; 
+}
+
+.travel-info-container {
+    background-color: white; 
+    min-height: 150px; 
+    max-height: 600px; 
+    width: 500px; 
+    padding: 50px; 
+    display: flex; 
+    flex-direction: column; 
+    margin-bottom: 10px;     
+}
+
+.check-bags-container, .confirm-container, .discount-container {
+    background-color: white; 
+    height: 150px; 
+    width: 500px; 
+    padding: 50px; 
+    display: flex; 
+    flex-direction: column; 
+    margin-bottom: 10px; 
+}
+
+form {
+    display: flex; 
+    flex-direction: column;
+}
+
+input:focus {
+    outline:none; 
+}
+
+#fullname, #phone, #email {
+    padding: 5px; 
+    margin-bottom: 20px; 
+    width: 300px; 
+}
+
+#checked-bags, #discount {
+    padding: 5px; 
+    width: 100px;     
+}
+
+.input-container {
+    display: flex; 
+    justify-content: space-evenly;
+    align-items: center;
+    padding-top: 10px; 
+    margin-left: 0px;  
+}
+
+.price-container {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-subheading {
+    color: gray; 
+    font-size: 15px; 
+}
+
+.book-button {
+    background-color: black;
+    color: white; 
+    width: 80px; 
+    height: 40px; 
+    border-radius: 8px; 
+    padding-top: 15px; 
+    padding-left: 30px; 
+    margin-top: 20px; 
+    margin-left: 400px; 
+    transition: all .3s ease-in-out, color 0.2s 0.3s; 
+}
+
+.book-button:hover {
+    cursor: pointer; 
+    color: white; 
+    background-color: #1C77EB;
+}

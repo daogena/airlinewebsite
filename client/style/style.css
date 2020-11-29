@@ -1,0 +1,91 @@
+body {
+    margin: 0; 
+    font-family: 'Montserrat', 'Open Sans';
+}
+
+.header-container {
+    background-image: url(../background.jpg);
+    background-size: cover; 
+    object-fit: contain;
+    height: 700px;  
+    width: 100%; 
+}
+
+.page-container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    padding-left: 100px;
+    padding-top: 150px; 
+}
+
+.page-title {
+    position: absolute; 
+    font-size: 36px;
+}
+
+.flights-box {
+    height: 250px; 
+    width: 1000px; 
+    margin-top: 100px; 
+    border-radius: 8px;
+    background-color: #FFFFFF; 
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.25); 
+}
+
+#connection, #passenger, #fare-condition {
+    border: none; 
+    margin: 40px; 
+    height: 30px; 
+    width: 150px; 
+}
+
+select:focus {
+    outline: none; 
+}
+
+.destination-selection {
+    display: flex; 
+    margin-left: 40px; 
+}
+
+.label {
+    font-size: 10px; 
+}
+
+.from-container, .to-container, .date-container {
+    border: 1px solid #DCDFE1; 
+    border-radius: 8px; 
+    width: 200px; 
+    height: 50px; 
+    margin-right: 90px; 
+    padding-top: 20px;
+    padding-left: 20px; 
+    padding-right: 20px;
+}
+
+#from, #to, #depart-date {
+    border: none; 
+    font-size: 20px;
+    width: 200px; 
+}
+
+.button {
+    background-color: black;
+    color: white; 
+    width: 150px; 
+    height: 40px; 
+    border-radius: 8px; 
+    margin-top: 30px; 
+    margin-left: 800px; 
+    padding-top: 20px; 
+    padding-left: 30px; 
+    transition: all .3s ease-in-out, color 0.2s 0.3s;
+}
+
+.button:hover {
+    cursor: pointer; 
+    color: white; 
+    background-color: #1C77EB;
+}

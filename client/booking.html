@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flights App</title>
+        <script src="js/booking.js"></script>
+        <link rel="stylesheet" href="style/booking.css">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    </head>
+    <body>
+        <div class="header-container">
+            <div class="page-container">
+                <div class="travel-info-container">
+                    <div class="travel-info-title">Traveler 1</div>
+                    <form>
+                        <input type="text" id="fullname" placeholder="Full name">
+                        <input type="text" id="phone" placeholder="Phone number">
+                        <input type="text" id="email" placeholder="Email">
+                    </form>
+                </div>
+                <div class="check-bags-container">
+                    <div class="travel-info-title">Add bags</div>
+                    <div class="input-container">
+                        <i class="fas fa-suitcase-rolling"></i>
+                        <div class="input-title">Check bags</div>
+                        <form>
+                            <input type="number" min="0" id="checked-bags" onChange="calculatePrice()">
+                        </form>
+                    </div>
+                </div>
+                <div class="discount-container">
+                    <div class="travel-info-title">Discount</div>
+                    <div class="input-container">
+                        <div class="input-title">PROMO CODE:</div>
+                        <form>
+                            <input type="text" id="discount">
+                        </form>
+                    </div>
+                </div>
+                <div class="confirm-container">
+                    <div class="travel-info-title">Confirm & Book</div>
+                    <div class="price-container">
+                        <div class="price-title">
+                            <div class="price-heading">Total price</div>
+                            <div class="price-subheading">with fare, taxes + fees</div>
+                        </div>
+                        <div class="total-price">$12700</div>
+                    </div>
+                    <div class="book-button" onClick="checkSeats()">Book</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

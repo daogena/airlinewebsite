@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flights App</title>
+        <script src="js/index.js"></script>
+        <link rel="stylesheet" href="style/style.css">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+    </head>
+    <body>
+        <div class="header-container">
+            <div class="page-container">
+                <div class="page-title">Where to?</div>
+                <div class="flights-box">
+                    <div class="selections">
+                        <!-- <select name="connection" id="connection">
+                            <option value="zero-connection">0 Connections</option>
+                            <option value="one-connection">1 Connection</option>
+                        </select> -->
+                        <select name="passenger" id="passenger">
+                            <option value="one-passenger">1 Passenger</option>
+                            <option value="two-passenger">2 Passengers</option>
+                            <option value="three-passenger">3 Passengers</option>
+                            <option value="four-passenger">4 Passengers</option>
+                        </select>
+                        <select name="fare-condition" id="fare-condition">
+                            <option value="Economy">Economy Class</option>
+                            <option value="Business">Business Class</option>
+                        </select>
+                    </div>
+                    <div class="destination-selection">
+                        <div class="from-container">
+                            <div class="label">FROM</div>
+                            <select name="from" id="from">
+                                <option value="houston">Houston</option>
+                                <option value="dallas">Dallas</option>
+                                <option value="la">Los Angeles</option>
+                                <option value="new-york">New York</option>
+                                <option value="orlando">Orlando</option>
+                                <option value="chicago">Chicago</option>
+                            </select>
+                        </div>
+                        <div class="to-container">
+                            <div class="label">TO</div>
+                            <select name="to" id="to">
+                                <option value="la">Los Angeles</option>
+                                <option value="new-york">New York</option>
+                                <option value="orlando">Orlando</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="houston">Houston</option>
+                                <option value="dallas">Dallas</option>
+                            </select>
+                        </div>
+                        <div class="date-container">
+                            <div class="label">DEPARTURE</div>
+                            <input type="date" id="depart-date" name="depart-date" min="2020-12-03" max="2021-02-03">
+                        </div>
+                    </div>
+                    <div class="button" onClick="submit()">Select Flights</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
