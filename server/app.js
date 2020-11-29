@@ -71,6 +71,7 @@ app.post('/booking', async(req, res) => {
     book_ref++;  
 });
 
+// TRIXIE - this function doesn't work because we don't have ticket_status to insert into the ticket table
 // Insert a new record in ticket table and ticket_flights table
 app.post('/confirmbooking', async(req, res) => {
     let flight_id = req.body.flight_id; 
