@@ -18,4 +18,4 @@ Things we need to do:
 - Please edit the book_ref, ticket_number, passenger_id that I declared to match your database. I just put in these as placeholders so if they don't look like how the variables in your database are supposed to look, you can change them 
 - Finish the bookings post endpoint to add a user onto the waitlist 
 - If user is on the waitlist, we need to somehow update ticket_status when we "POST" to the database (/confirmbooking endpoint in app.js)
-  - Idk where you put the waitlist in the DB so I haven't figured this part out yet 
+  - Idk where you put the waitlist in the DB so I haven't figured this part out yet ***I dont have a separate table for waitlist that why added the ticket_status into the ticket table so if someone have to be on a waitlist then we just put "Waitlist" in the database. If that customer ever get a chance to get a ticket after, then we can update the status to "Booked" showing that the customer finally get the ticket. So we will have 2 datas for ticket_status, either "Booked" or "Waitlist".***
