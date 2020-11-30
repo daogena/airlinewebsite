@@ -22,7 +22,7 @@ Things we need to do:
 
 ********GENA please read this, this is my plan for the booking from start to done, hopefully this help us. I didn't mess with the code yet because I don't know nodejs so you prob need to help me understand the structure more*********
 1. Generate book_ref, get current timestamp for book_date, and based on class customer chose and the total number of ticket they want to book we can get the total amount from there. 
-    +So in app.js -> app.post('/bookings, async(req, res), we only need to update booking table.
+    So in app.js -> app.post('/bookings, async(req, res), we only need to update booking table.
 2. Then in app.js -> app.post('/confirmbooking', async(req, res)
     +Check if there is any seat available
       -if it is available then we set status variable as 'Booked' (which we need to declare seat_status variable.
