@@ -1,12 +1,12 @@
 // Reads HTML and translates to int
-function connection(connection_value) {
-    if (connection_value == "zero-connection") {
-        return 0; 
-    }
-    else {
-        return 1; 
-    }
-}
+// function connection(connection_value) {
+//     if (connection_value == "zero-connection") {
+//         return 0; 
+//     }
+//     else {
+//         return 1; 
+//     }
+// }
 
 // Reads HTML and translates to int
 function passenger(passenger_value) {

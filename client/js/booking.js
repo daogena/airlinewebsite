@@ -67,9 +67,30 @@ function farePrice(fare_condition) {
     }
 }
 
+// async function farePrice(fare_condition) {
+//     const body = {
+//         fare: fare_condition
+//     };
+//     const url = `${API_BASE_URL}fare`; 
+//     try {
+//         const response = await fetch(url, {
+//             method: "POST", 
+//             headers: { "Content-Type": "application/json"},
+//             body: JSON.stringify(body)
+//         }).then((response) => {
+//             return response.json();
+//         }).then((data) => {
+//             console.log(data); 
+//             return data; 
+//         });         
+//     } catch (err) {
+//         console.log(err.message); 
+//     }
+// }
+
 // Display the total price at the bottom of the page depending on how many passengers there are
 let price; 
-function displayPrice() {
+async function displayPrice() {
     price = passengers * farePrice(fare_condition); 
     let priceContent = "";
     priceContent += `
@@ -104,8 +125,7 @@ function calculatePrice() {
 async function checkSeats() { 
     let total_amount = calculatePrice(); 
     const body = {
-        flight_id: flight_id, 
-        total: total_amount,
+        total: total_amount
     }; 
     const url = `${API_BASE_URL}booking`
     try {
@@ -132,18 +152,21 @@ async function confirmBooking() {
     let name; 
     let phone; 
     let email; 
+    let bags = document.getElementById('checked-bags').value; 
     for(i = 1; i <= passengers; i++) {
         name = document.querySelector(`[name="name${i}"]`).value; 
         email = document.querySelector(`[name="email${i}"]`).value;
         phone = document.querySelector(`[name="phone${i}"]`).value;  
-        price = farePrice(fare_condition); 
+        if (bags == "") {
+            bags = 0; 
+        }
         const body = {
             flight_id: flight_id, 
             name: name, 
             email: email, 
             phone: phone, 
             fare: fare_condition, 
-            price: price
+            bags: bags
         };   
         const url = `${API_BASE_URL}confirmbooking`
         try {
