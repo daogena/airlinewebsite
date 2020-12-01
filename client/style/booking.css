@@ -8,10 +8,9 @@ body {
     background-size: cover; 
     object-fit: contain;
     min-height: 1000px; 
-    height: 2000px;  
+    height: 4000px;  
     width: 100%; 
     display: flex; 
-    align-items: center;
     justify-content: center;
 }
 
@@ -19,8 +18,6 @@ body {
     position: absolute; 
     display: flex; 
     flex-direction: column; 
-    justify-content: center;
-    align-items: center;
 }
 
 .travel-info-title {
@@ -35,10 +32,11 @@ body {
     padding: 50px; 
     display: flex; 
     flex-direction: column; 
+    margin-top: 100px; 
     margin-bottom: 10px;     
 }
 
-.check-bags-container, .confirm-container, .discount-container {
+.check-bags-container {
     background-color: white; 
     height: 150px; 
     width: 500px; 
@@ -46,6 +44,16 @@ body {
     display: flex; 
     flex-direction: column; 
     margin-bottom: 10px; 
+}
+
+.confirm-container {
+    background-color: white; 
+    height: 300px; 
+    width: 500px; 
+    padding: 50px; 
+    display: flex; 
+    flex-direction: column; 
+    margin-bottom: 10px;     
 }
 
 form {
@@ -63,12 +71,17 @@ input:focus {
     width: 300px; 
 }
 
-#checked-bags, #discount {
+#card-no {
+    padding: 5px; 
+    width: 300px; 
+}
+
+#checked-bags {
     padding: 5px; 
     width: 100px;     
 }
 
-.input-container {
+.input-container{
     display: flex; 
     justify-content: space-evenly;
     align-items: center;
@@ -76,10 +89,25 @@ input:focus {
     margin-left: 0px;  
 }
 
-.price-container {
+
+.payment-container, .subtotal-container, .discount-container, .total-price-container {
     display: flex; 
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 10px; 
+}
+
+.discount-container {
+    border-bottom: 1px solid gray; 
+}
+
+.total-price-container {
+    padding-top: 10px; 
+}
+
+.price-container {
+    display: flex; 
+    flex-direction: column; 
 }
 
 .price-subheading {

@@ -30,6 +30,7 @@ window.onload = function() {
 
     flight_id = localStorage.getItem("flightidLocalStorage"); 
 
+    farePrice(fare_condition); 
     displayTravelers(); 
     displayPrice(); 
 }
@@ -52,76 +53,94 @@ function displayTravelers() {
     document.querySelector(".travel-info-container").innerHTML = travelerContent; 
 }
 
-// TRIXIE - This is a function I used before you determined the price for each class. I don't think we're going to end up using this because we're going to query the db
-// You can create another endpoint in app.js to query the price depending on class 
-// Something like app.get('/class ...)
-function farePrice(fare_condition) {
-    if (fare_condition == "Economy") {
-        return 100; 
-    } 
-    else if (fare_condition == "Business") {
-        return 600; 
+let price; 
+async function farePrice(fare_condition) {
+    const body = {
+        fare: fare_condition
+    };
+    const url = `${API_BASE_URL}fare`;  
+    try {
+        price = await fetch(url, {
+            method: "POST", 
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify(body)
+        }).then((response) => {
+            return response.json();
+        }); 
+    } catch (err) {
+        console.log(err.message); 
     }
-    else {
-        return 2000; 
-    }
+    localStorage.setItem("priceLocalStorage", price); 
+    return price; 
 }
 
-// async function farePrice(fare_condition) {
-//     const body = {
-//         fare: fare_condition
-//     };
-//     const url = `${API_BASE_URL}fare`; 
-//     try {
-//         const response = await fetch(url, {
-//             method: "POST", 
-//             headers: { "Content-Type": "application/json"},
-//             body: JSON.stringify(body)
-//         }).then((response) => {
-//             return response.json();
-//         }).then((data) => {
-//             console.log(data); 
-//             return data; 
-//         });         
-//     } catch (err) {
-//         console.log(err.message); 
-//     }
-// }
-
 // Display the total price at the bottom of the page depending on how many passengers there are
-let price; 
+let total; 
+let subtotal; 
+let discount;
 async function displayPrice() {
-    price = passengers * farePrice(fare_condition); 
+    let price = localStorage.getItem("priceLocalStorage"); 
+    // subtotal = passengers * farePrice(fare_condition); 
+    subtotal = passengers * price;
+    discount;
+    if (fare_condition == 'Business') {
+        discount = 0.1; 
+        total = subtotal - (subtotal * discount); 
+    }
+    else {
+        discount = 0; 
+        total = subtotal - (subtotal * discount); 
+    }
+    discount = (subtotal * discount); 
     let priceContent = "";
     priceContent += `
-        <div class="price-title">
-            <div class="price-heading">Total price</div>
-            <div class="price-subheading">with fare, taxes + fees</div>
+        <div class="subtotal-container">
+            <div class="travel-info-title">Subtotal</div>
+            <div class="subtotal">$${subtotal}</div>
         </div>
-        <div class="total-price">$${price}</div>
+        <div class="discount-container">
+            <div class="travel-info-titel">Discount</div>
+            <div class="discount">-${discount}</div>
+        </div>
+        <div class="total-price-container">
+            <div class="price-title">
+                <div class="price-heading">Total price</div>
+                <div class="price-subheading">with fare, taxes + fees</div>
+            </div>
+            <div class="total-price">$${total}</div>
+        </div>
     `
     document.querySelector(".price-container").innerHTML = priceContent; 
+    return discount; 
 }
 
 // Whenever the user changes the amount of checked bags, the price will also change
 let total_amount; 
 function calculatePrice() {
     let num_checked_bags = document.getElementById("checked-bags").value; 
-    total_amount = price + num_checked_bags * 50; 
-    let priceContent = "";
-    priceContent += `
+    let sub_total = subtotal + num_checked_bags * 50; 
+    total_amount = sub_total - discount; 
+    let subtotalContent = "";
+    let totalContent = ""; 
+    subtotalContent += `
+        <div class="travel-info-title">Subtotal</div>
+        <div class="subtotal">$${sub_total}</div>
+    `; 
+    totalContent += `
         <div class="price-title">
             <div class="price-heading">Total price</div>
             <div class="price-subheading">with fare, taxes + fees</div>
         </div>
-        <div class="total-price">$${total_amount}</div>
-    `
-    document.querySelector(".price-container").innerHTML = priceContent; 
+        <div class="total-price">$${total_amount}</div>        
+    `; 
+    document.querySelector(".subtotal-container").innerHTML = subtotalContent; 
+    document.querySelector(".total-price-container").innerHTML = totalContent; 
     return total_amount;     
 }
 
 // When user clicks book
 // Check if there are seats available and update bookings table
+let response; 
 async function checkSeats() { 
     let total_amount = calculatePrice(); 
     const body = {
@@ -129,21 +148,20 @@ async function checkSeats() {
     }; 
     const url = `${API_BASE_URL}booking`
     try {
-        const response = await fetch(url, {
+        response = await fetch(url, {
             method: "POST", 
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify(body)
         }).then((response) => {
             // If query is successful, execute confirmBooking()
             // Finish the booking post endpoint to account for adding on the waitlist
-            if (response.status == 200) {
-                confirmBooking(); 
-            }
+            return response.json(); 
         }); 
     } catch (err) {
         console.log(err.message); 
     }
-    // window.location.href = "ticket.html"
+    localStorage.setItem("bookrefLocalStorage", response.book_ref);  
+    confirmBooking(); 
 }
 
 // TRIXIE - this doesn't fully work yet because I am missing the ticket status 
@@ -153,6 +171,8 @@ async function confirmBooking() {
     let phone; 
     let email; 
     let bags = document.getElementById('checked-bags').value; 
+    let card_no = document.getElementById('card-no').value; 
+    discount = discount / 100; 
     for(i = 1; i <= passengers; i++) {
         name = document.querySelector(`[name="name${i}"]`).value; 
         email = document.querySelector(`[name="email${i}"]`).value;
@@ -166,19 +186,33 @@ async function confirmBooking() {
             email: email, 
             phone: phone, 
             fare: fare_condition, 
-            bags: bags
+            bags: bags, 
+            card_no: card_no, 
+            ticket_price: price,
+            discount: discount
         };   
         const url = `${API_BASE_URL}confirmbooking`
         try {
-            const response = await fetch(url, {
+            response = await fetch(url, {
                 method: "POST", 
                 headers: { "Content-Type": "application/json"},
                 body: JSON.stringify(body)
             }).then((response) => {
-                console.log(response.status)
+                return response.json(); 
             }); 
         } catch (err) {
             console.log(err.message); 
         }
-    }
+        localStorage.setItem(`name${i}LocalStorage`, name); 
+        localStorage.setItem(`seatid${i}LocalStorage`, response['seat_available']);
+        localStorage.setItem(`ticketno${i}LocalStorage`, response['ticket_number']);  
+    } 
+    setVariables(); 
+    window.location.href = 'ticket.html'; 
+}
+
+function setVariables() {
+    localStorage.setItem("passengerLocalStorage",passengers); 
+    localStorage.setItem("flightidLocalStorage", flight_id); 
+    localStorage.setItem("fareLocalStorage", fare_condition);
 }
