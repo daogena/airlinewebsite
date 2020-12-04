@@ -1,3 +1,4 @@
+let connections; 
 let passengers; 
 let date; 
 let fare_condition; 
@@ -7,7 +8,8 @@ let depart_time;
 let arrive; 
 let arrive_time; 
 
-let flight_id; 
+let flight_id;
+let flight_no;  
 
 const API_BASE_URL = "http://localhost:3000/"; 
 
@@ -30,9 +32,45 @@ window.onload = function() {
 
     flight_id = localStorage.getItem("flightidLocalStorage"); 
 
-    farePrice(fare_condition); 
-    displayTravelers(); 
-    displayPrice(); 
+    connections = localStorage.getItem("connectLocalStorage"); 
+
+    if (connections == "no") {
+        farePrice(fare_condition); 
+        displayTravelers(); 
+        displayPrice(); 
+    }
+    else {
+        flight_no = localStorage.getItem("flightnoLocalStorage"); 
+        farePrice(fare_condition);
+        displayTravelers(); 
+        displayPrice(); 
+        getFlightIds(); 
+    }
+}
+
+let flight_id1; 
+let flight_id2; 
+async function getFlightIds() {
+    let response; 
+    const body = {
+        flight_no: flight_no
+    };
+    const url = `${API_BASE_URL}connectingflight`;  
+    try {
+        response = await fetch(url, {
+            method: "POST", 
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify(body)
+        }).then((response) => {
+            return response.json();
+        }); 
+    } catch (err) {
+        console.log(err.message); 
+    } 
+    flight_id1 = response[0]['flight_id']; 
+    flight_id2 = response[1]['flight_id']; 
+    localStorage.setItem("flightid1LocalStorage", flight_id1); 
+    localStorage.setItem("flightid2LocalStorage", flight_id2);
 }
 
 // Show containers for each traveler, depending on the number of passengers the user chose
@@ -80,7 +118,6 @@ let subtotal;
 let discount;
 async function displayPrice() {
     let price = localStorage.getItem("priceLocalStorage"); 
-    // subtotal = passengers * farePrice(fare_condition); 
     subtotal = passengers * price;
     discount;
     if (fare_condition == 'Business') {
@@ -164,8 +201,7 @@ async function checkSeats() {
     confirmBooking(); 
 }
 
-// TRIXIE - this doesn't fully work yet because I am missing the ticket status 
-// We need to finish the booking post endpoint to account for adding on the waitlist
+
 async function confirmBooking() {
     let name; 
     let phone; 
@@ -180,32 +216,91 @@ async function confirmBooking() {
         if (bags == "") {
             bags = 0; 
         }
-        const body = {
-            flight_id: flight_id, 
-            name: name, 
-            email: email, 
-            phone: phone, 
-            fare: fare_condition, 
-            bags: bags, 
-            card_no: card_no, 
-            ticket_price: price,
-            discount: discount
-        };   
-        const url = `${API_BASE_URL}confirmbooking`
-        try {
-            response = await fetch(url, {
-                method: "POST", 
-                headers: { "Content-Type": "application/json"},
-                body: JSON.stringify(body)
-            }).then((response) => {
-                return response.json(); 
-            }); 
-        } catch (err) {
-            console.log(err.message); 
+        if (connections == "yes") {
+            let body = {
+                flight_id: flight_id1, 
+                name: name, 
+                email: email, 
+                phone: phone, 
+                fare: fare_condition, 
+                bags: bags, 
+                card_no: card_no, 
+                ticket_price: price,
+                discount: discount, 
+                connection: connections
+            };   
+            const url = `${API_BASE_URL}confirmbooking`
+            try {
+                response = await fetch(url, {
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify(body)
+                }).then((response) => {
+                    return response.json(); 
+                }); 
+            } catch (err) {
+                console.log(err.message); 
+            } 
+            localStorage.setItem(`seatidfirstconnect${i}LocalStorage`, response['seat_available']);
+            localStorage.setItem(`ticketnofirstconnect${i}LocalStorage`, response['ticket_number']);
+            localStorage.setItem(`waitfirstconnect${i}LocalStorage`, response['wait']); 
+            body = {
+                flight_id: flight_id2, 
+                name: name, 
+                email: email, 
+                phone: phone, 
+                fare: fare_condition, 
+                bags: bags, 
+                card_no: card_no, 
+                ticket_price: price,
+                discount: discount
+            };  
+            try {
+                response = await fetch(url, {
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify(body)
+                }).then((response) => {
+                    return response.json(); 
+                }); 
+            } catch (err) {
+                console.log(err.message); 
+            }
+            localStorage.setItem(`name${i}LocalStorage`, name); 
+            localStorage.setItem(`seatidsecondconnect${i}LocalStorage`, response['seat_available']);
+            localStorage.setItem(`ticketnosecondconnect${i}LocalStorage`, response['ticket_number']);
+            localStorage.setItem(`waitsecondconnect${i}LocalStorage`, response['wait']); 
         }
-        localStorage.setItem(`name${i}LocalStorage`, name); 
-        localStorage.setItem(`seatid${i}LocalStorage`, response['seat_available']);
-        localStorage.setItem(`ticketno${i}LocalStorage`, response['ticket_number']);  
+        else { 
+            const body = {
+                flight_id: flight_id, 
+                name: name, 
+                email: email, 
+                phone: phone, 
+                fare: fare_condition, 
+                bags: bags, 
+                card_no: card_no, 
+                ticket_price: price,
+                discount: discount, 
+                connection: connections
+            };   
+            const url = `${API_BASE_URL}confirmbooking`
+            try {
+                response = await fetch(url, {
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify(body)
+                }).then((response) => {
+                    return response.json(); 
+                }); 
+            } catch (err) {
+                console.log(err.message); 
+            }
+            localStorage.setItem(`name${i}LocalStorage`, name); 
+            localStorage.setItem(`seatid${i}LocalStorage`, response['seat_available']);
+            localStorage.setItem(`ticketno${i}LocalStorage`, response['ticket_number']);
+            localStorage.setItem(`wait${i}LocalStorage`, response['wait']); 
+        }
     } 
     setVariables(); 
     window.location.href = 'ticket.html'; 
@@ -215,4 +310,5 @@ function setVariables() {
     localStorage.setItem("passengerLocalStorage",passengers); 
     localStorage.setItem("flightidLocalStorage", flight_id); 
     localStorage.setItem("fareLocalStorage", fare_condition);
+    localStorage.setItem("connectLocalStorage", connections); 
 }
