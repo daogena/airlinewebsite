@@ -37,9 +37,6 @@ window.onload = function()  {
     for(i = 1; i <= passengers; i++) {
         let name = localStorage.getItem(`name${i}LocalStorage`);
         name = name.toUpperCase();  
-        let ticket_number = localStorage.getItem(`ticketno${i}LocalStorage`); 
-        let seatid = localStorage.getItem(`seatid${i}LocalStorage`);
-        let wait = localStorage.getItem(`wait${i}LocalStorage`); 
         if (connections == "yes") {
             let ticket_number1 = localStorage.getItem(`ticketnofirstconnect${i}LocalStorage`); 
             let ticket_number2 = localStorage.getItem(`ticketnosecondconnect${i}LocalStorage`); 
@@ -47,14 +44,18 @@ window.onload = function()  {
             let wait2 = localStorage.getItem(`waitsecondconnect${i}LocalStorage`); 
             let seatid1 = localStorage.getItem(`seatidfirstconnect${i}LocalStorage`); 
             let seatid2 = localStorage.getItem(`seatidsecondconnect${i}LocalStorage`); 
-            displayFirstTicket(date_string, ticket_number1, seatid1, wait1);
-            displaySecondTicket(date_string, ticket_number2, seatid2, wait2);  
+            displayFirstTicket(date_string, ticket_number1, seatid1, name, wait1);
+            displaySecondTicket(date_string, ticket_number2, seatid2, name, wait2);  
         }  
         else {
+            let ticket_number = localStorage.getItem(`ticketno${i}LocalStorage`); 
+            let seatid = localStorage.getItem(`seatid${i}LocalStorage`);
+            let wait = localStorage.getItem(`wait${i}LocalStorage`); 
             displayTicket(date_string, ticket_number, seatid, name, wait); 
         }
     }
 }
+let ticketContent = "";
 
 async function displayTicket(date_string, ticket_number, seatid, name, wait) {
     if (wait == "yes") {
@@ -64,9 +65,7 @@ async function displayTicket(date_string, ticket_number, seatid, name, wait) {
         document.getElementById("success-book").style.opacity = 1; 
     }
     let response; 
-    let ticketContent = "";
-    flight_id = localStorage.getItem("flightidLocalStorage");
-    console.log(flight_id);  
+    flight_id = localStorage.getItem("flightidLocalStorage"); 
     let body = {
         flight_id: flight_id
     }
@@ -177,7 +176,7 @@ async function displayTicket(date_string, ticket_number, seatid, name, wait) {
     document.querySelector('.tickets-container').innerHTML = ticketContent;
 }
 
-async function displayFirstTicket(date_string, ticket_number, seatid, wait1) {
+async function displayFirstTicket(date_string, ticket_number, seatid, name, wait1) {
     if (wait1 == "yes") {
         document.getElementById("wait-container").style.opacity = 1; 
     }
@@ -185,11 +184,9 @@ async function displayFirstTicket(date_string, ticket_number, seatid, wait1) {
         document.getElementById("success-book").style.opacity = 1; 
     }
     let response; 
-    let ticketContent = "";
     flight_id1 = localStorage.getItem("flightid1LocalStorage"); 
-    flight_id2 = localStorage.getItem("flightid2LocalStorage");
     let body = {
-        flight_id: flight_id
+        flight_id: flight_id1
     }
     let url = `${API_BASE_URL}flight`; 
     try {
@@ -203,7 +200,7 @@ async function displayFirstTicket(date_string, ticket_number, seatid, wait1) {
     } catch(err) {
         console.log(err.message); 
     }
-    let gate = response[0]['departure_gate']; 
+    let gate = response[0]['departure_gate'];
     let board; 
     body = {
         fare: fare_condition
@@ -298,7 +295,7 @@ async function displayFirstTicket(date_string, ticket_number, seatid, wait1) {
     document.querySelector('.tickets-container').innerHTML = ticketContent;
 }
 
-async function displaySecondTicket(date_string, ticket_number, seatid, wait2) {
+async function displaySecondTicket(date_string, ticket_number, seatid, name, wait2) {
     if (wait2 == "yes") {
         document.getElementById("wait-container").style.opacity = 1; 
     }
@@ -306,7 +303,6 @@ async function displaySecondTicket(date_string, ticket_number, seatid, wait2) {
         document.getElementById("success-book").style.opacity = 1; 
     }
     let response; 
-    let ticketContent = "";
     flight_id2 = localStorage.getItem("flightid2LocalStorage");
     let body = {
         flight_id: flight_id2

@@ -218,6 +218,7 @@ app.post('/confirmbooking', async(req, res) => {
                     client.query(`INSERT INTO boarding_passes VALUES (${boarding_no}, ${ticket_number}, '${flight_id}', (SELECT seat_no FROM seats WHERE seat_id=${seat_available}), ((SELECT scheduled_departure FROM flights WHERE flight_id='${flight_id}') - INTERVAL '30 MIN'))`); 
                 }
                 else {
+                    wait = "no"; 
                     const find_ticket_number = await client.query(`SELECT ticket_no FROM ticket ORDER BY ticket_no DESC LIMIT 1`); 
                     const last_ticket_number = parseInt(find_ticket_number.rows[0].ticket_no); 
                     ticket_number = last_ticket_number + 1;  

@@ -112,6 +112,7 @@ let arrive_time;
 let flight_id; 
 
 let connectcity; 
+let connect_time;
 async function getConnectingFlights(response) { 
     let flight_no;
     if (typeof response != 'undefined') {
@@ -119,7 +120,7 @@ async function getConnectingFlights(response) {
             flight_no = response[i]['flight_no'];
             connectcity = response[i]['connection']; 
 
-            const body = {
+            let body = {
                 flight_no: flight_no,
                 from: from
             } 
@@ -142,8 +143,28 @@ async function getConnectingFlights(response) {
             let showDepart_time = depart_time.substring(11, 16); 
             
             arrive = response[i]['arrival_airport']; 
-            arrive_time = (connect[i]['scheduled_arrival']).toString();
-            let showArrive_time = arrive_time.substring(11, 16);  
+            connect_time = (connect[i]['scheduled_arrival']).toString();
+            let showConnect_time = connect_time.substring(11, 16);  
+
+            body = {
+                flight_no: flight_no, 
+                from: connectcity
+            }
+            let connectingflight; 
+            try {
+                connectingflight = await fetch(url, {
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify(body) 
+                }).then((response) => {
+                    return response.json(); 
+                });
+            } catch(err) {
+                console.log(err.message); 
+            } 
+            arrive_time = (connectingflight[i]['scheduled_departure']).toString(); 
+            let showArrive_time = arrive_time.substring(11, 16); 
+
             flightContent += `
                 <div class="flight-container">
                     <div class="departure-date-container">
@@ -157,11 +178,12 @@ async function getConnectingFlights(response) {
                         <i class="fas fa-plane"></i>
                         <div class="from-city-container">
                             <div class="from-city">${connectcity}</div>
-                            <div class="to-time">${showArrive_time}</div>
+                            <div class="to-time">${showConnect_time}</div>
                         </div>   
                         <i class="fas fa-plane"></i>
                         <div class="to-city-container">
                             <div class="to-city">${arrive}</div>
+                            <div class="to-time">${showArrive_time}</div>
                         </div>
                     </div>
                     <div class="book-button-container">
@@ -228,25 +250,9 @@ async function getFlights() {
     }
     else {
         console.log("nothing"); 
-        flightContent += `
+        flightContent = `
             <div class="flight-container">
-                <div class="departure-date-container">
-                    <div class="departure-date">2020</div>
-                </div>
-                <div class="from-to-container">
-                    <div class="from-city-container">
-                        <div class="from-city">here</div>
-                        <div class="from-time">12</div>
-                    </div>
-                    <i class="fas fa-plane"></i>
-                    <div class="to-city-container">
-                        <div class="to-city">there</div>
-                        <div class="to-time">12</div>
-                    </div>
-                </div>
-                <div class="book-button-container">
-                    <div class="book-button" onClick="book()">Book</div>
-                </div>
+                There are no flights available
             </div>  
         `
         document.querySelector(".available-flights").innerHMTL = flightContent; 
@@ -282,6 +288,7 @@ function bookConnecting() {
     localStorage.setItem("arrivecityLocalStorage", arrive); 
     localStorage.setItem("arrivetimeLocalStorage", arrive_time);
     localStorage.setItem("connectcityLocalStorage", connectcity); 
+    localStorage.setItem("connecttimeLocalStorage", connect_time); 
     
     connections = 'yes'; 
     localStorage.setItem("connectLocalStorage", connections); 
