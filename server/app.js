@@ -14,7 +14,15 @@ app.use(express.json());
 app.post('/flights', async(req, res) => {
     let from = req.body.from; 
     let to = req.body.to; 
-    let date = req.body.date; 
+    let date = req.body.date;
+    
+    fs.writeFile(querysql, "", function (err) {
+        if (err) throw err;
+    });
+    fs.writeFile(transactionsql, "", function (err) {
+        if (err) throw err;
+    });
+    
     try {
         let queryData = ""; 
 
