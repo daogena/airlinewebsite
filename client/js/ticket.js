@@ -60,6 +60,7 @@ let ticketContent = "";
 async function displayTicket(date_string, ticket_number, seatid, name, wait) {
     if (wait == "yes") {
         document.getElementById("wait-container").style.opacity = 1; 
+        return; 
     }
     else {
         document.getElementById("success-book").style.opacity = 1; 
@@ -179,6 +180,7 @@ async function displayTicket(date_string, ticket_number, seatid, name, wait) {
 async function displayFirstTicket(date_string, ticket_number, seatid, name, wait1) {
     if (wait1 == "yes") {
         document.getElementById("wait-container").style.opacity = 1; 
+        return; 
     }
     else {
         document.getElementById("success-book").style.opacity = 1; 
@@ -298,6 +300,7 @@ async function displayFirstTicket(date_string, ticket_number, seatid, name, wait
 async function displaySecondTicket(date_string, ticket_number, seatid, name, wait2) {
     if (wait2 == "yes") {
         document.getElementById("wait-container").style.opacity = 1; 
+        return; 
     }
     else {
         document.getElementById("success-book").style.opacity = 1; 
