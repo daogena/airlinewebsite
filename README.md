@@ -19,3 +19,5 @@ Run command nodemon app.js. This starts the server.
 Right click airlineweb.html and click Copy Path. Paste this into Google Chrome. 
 
 Now you can book a flight!
+
+https://docs.google.com/spreadsheets/d/10MW60MhF_okBsf8vNaF4m9mKCl3F--yl8NCV0C8rBsk/edit?fbclid=IwAR1bX4-sGMI_-PFtZY3oo0m2EOMVpmbqTSk38Qj0Smu76yC5KjZyaZg-2SU#gid=0
