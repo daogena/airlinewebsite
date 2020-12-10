@@ -4,7 +4,7 @@ Put make_airline_sql.sql in your server and run it using Postgres: \i make_airli
 Type in your username and password into password.txt with username on the first line and password on the second line. No spaces. Save.
 
 
-Open server folder in terminal. 
+Open server folder in terminal. If you're using Visual Studio Code, right click the server folder and click Open in Integrated Terminal. 
 
 
 Run command npm install. This should install dependencies. If not, go to package.json and look at dependencies. Install them individually: 
