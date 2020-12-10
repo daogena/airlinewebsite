@@ -1,3 +1,7 @@
+Demo video to use the website:
+
+https://drive.google.com/file/d/1-RSH64_bmBDzocorgQ3-5Up9N8c_gwqN/view?usp=sharing
+
 Put make_airline_sql.sql in your server and run it using Postgres: \i make_airline_sql.sql.
 
 
