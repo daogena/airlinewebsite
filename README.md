@@ -2,8 +2,7 @@ Demo video to use the website:
 
 https://drive.google.com/file/d/1-RSH64_bmBDzocorgQ3-5Up9N8c_gwqN/view?usp=sharing
 
-Put make_airline_sql.sql in your server and run it using Postgres: \i make_airline_sql.sql.
-
+We get a chance to get the group_no shcema working but we made the make_airline_sql.sql file to get your data working, so just make sure you use it before running the webstie. Put make_airline_sql.sql in your server and run it using Postgres: \i make_airline_sql.sql.
 
 Type in your username and password into password.txt with username on the first line and password on the second line. No spaces. Save.
 
