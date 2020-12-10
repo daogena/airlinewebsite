@@ -25,7 +25,7 @@ app.post('/flights', async(req, res) => {
     
     try {
         let queryData = ""; 
-i
+        
         let query = `DROP TABLE IF EXISTS search_flights\n\n`; 
         await pool.query(query); 
         queryData += query; 
